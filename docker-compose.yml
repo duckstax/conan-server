@@ -1,0 +1,25 @@
+#version: '2'
+services:
+    conan:
+        container_name: conan-server
+        build:
+            context: .
+            dockerfile: Dockerfile
+        #image:
+        volumes:
+          - ./conan:/root/.conan_server/data
+        restart: always
+
+    nginx:
+      image: nginx:latest
+      container_name: webserver
+      restart: unless-stopped
+      ports:
+        # port should match `public_port` in Conan server.conf
+        - 9999:80
+        #- 443:443
+      volumes:
+        - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+        #- /home/ubuntu/ssl:/ssl/
+      depends_on:
+        - conan
