@@ -16,7 +16,7 @@ services:
       restart: unless-stopped
       ports:
         # port should match `public_port` in Conan server.conf
-        - 9999:80
+        - 80:80
         #- 443:443
       volumes:
         - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
